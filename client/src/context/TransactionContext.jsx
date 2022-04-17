@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { NFT_ADDRESS, NODE_PROVIDER } from "../constant";
-const Web3 = require('web3')
-const NFT_ABI = require('../abi/celoNft_abi.json')
-
+import { NFT_ABI } from "../abi/abi";
 
 export const TransactionContext = React.createContext();
 
@@ -74,16 +72,16 @@ export const TransactionsProvider = ({ children }) => {
     };
 
     const mintToken = async()=>{
-        const web3 = new Web3(NODE_PROVIDER);
-        const erc721Contract = new web3.eth.Contract(NFT_ABI, NFT_ADDRESS)
+        const WEB3 = new Web3(NODE_PROVIDER);
+        const erc721Contract = new WEB3.eth.Contract(NFT_ABI, NFT_ADDRESS)
         const mint = erc721Contract.methods.mint(
             // USER_INPUT
         ).encodeABI()
         params = [{
             from: currentAccount,
             to: NFT_ADDRESS,
-            gas: web3.utils.toHex('400000'),
-            gasPrice: web3.utils.toHex(web3.utils.toWei('21', 'gwei')),
+            gas: WEB3.utils.toHex('400000'),
+            gasPrice: WEB3.utils.toHex(WEB3.utils.toWei('21', 'gwei')),
             data: mint
         }]
 
@@ -94,8 +92,9 @@ export const TransactionsProvider = ({ children }) => {
     }
 
     const transferToken = async()=>{
-        const web3 = new Web3(NODE_PROVIDER);
-        const erc721Contract = new web3.eth.Contract(NFT_ABI, NFT_ADDRESS)
+        const Web3 = require('web3')
+        const WEB3 = new Web3(NODE_PROVIDER);
+        const erc721Contract = new WEB3.eth.Contract(NFT_ABI, NFT_ADDRESS)
         const mint = erc721Contract.methods.transferFrom(
             currentAccount,
             formData.addressTo,
@@ -104,8 +103,8 @@ export const TransactionsProvider = ({ children }) => {
         params = [{
             from: currentAccount,
             to: NFT_ADDRESS,
-            gas: web3.utils.toHex('200000'),
-            gasPrice: web3.utils.toHex(web3.utils.toWei('21', 'gwei')),
+            gas: WEB3.utils.toHex('200000'),
+            gasPrice: WEB3.utils.toHex(WEB3.utils.toWei('21', 'gwei')),
             data: mint
         }]
         

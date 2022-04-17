@@ -1,4 +1,4 @@
-[
+export const NFT_ABI = [
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
